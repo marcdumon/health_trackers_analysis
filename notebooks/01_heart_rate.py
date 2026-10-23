@@ -25,7 +25,7 @@
 # - Error sizes: mean absolute error (MAE), mean absolute percentage error (MAPE), root mean square error (RMSE).
 # - Agreement on one scale: Lin's concordance correlation (CCC) and the intraclass correlation ICC(A,1).
 #
-# **Samples are not independent.** The Fitbit reports about every 3 s, and neighbouring errors are alike. So:
+# **Samples are not independent.** The Fitbit reports every 2 to 3 s, and neighbouring errors are alike. So:
 # - the limits of agreement use the method for repeated measures (Bland & Altman 2007), with the session as the unit;
 # - every confidence interval comes from a block bootstrap: whole blocks of minutes are drawn, not single samples.
 
@@ -52,7 +52,8 @@ STEADY_BPM = 2
 
 sessions, beats, fitbit = load('h10_sessions'), load('h10_beats'), load('fitbit_hr')
 sessions = sessions[(sessions['end'] - sessions['start']) >= pd.Timedelta(minutes=2)].copy()
-sessions = sessions[(sessions['removed'].fillna(0) == 0) & sessions['copy_of'].isna()].copy()
+# a session hidden in the Automation desk (removed) is still a good recording; only a copy would pair the same beats twice
+sessions = sessions[sessions['copy_of'].isna()].copy()
 sessions['activity'] = sessions['activity'].fillna('not set')
 paired = align.pairs(fitbit, beats, sessions, WINDOW_S, LAG_S)
 # how fast the HR changes: the H10 HR now minus 10 s ago
@@ -100,10 +101,11 @@ for session in sessions.itertuples():
     charts.session_hr(top, bottom, reference, part)
     start, end = session.start.tz_convert(tz), session.end.tz_convert(tz)
     part_stats = stats.agreement(part['device'], part['h10'])
+    every = part['time'].diff().dt.total_seconds().median()
     name = '' if session.activity == 'not set' else f'{session.activity}, '
     charts.heading(fig, f'{name}{start:%a %d %b %H:%M}–{end:%H:%M}',
                    f'Bias {charts.signed(part_stats["bias"])} bpm, MAE {part_stats["mae"]:.1f} bpm, {len(part)} pairs. '
-                   f'H10 over the last {WINDOW_S} s; Fitbit as it reports, about every 3 s.')
+                   f'H10 over the last {WINDOW_S} s; Fitbit as it reports, about every {every:.0f} s.')
     charts.save(fig, f'hr_session_{session.key}')
     plt.show()
 
@@ -189,8 +191,10 @@ plt.show()
 # behind a rise, and reads low while the HR goes up. Bins with fewer than 5 blocks show no interval.
 
 # %%
-low, high = 10 * math.floor(steady['h10'].min() / 10), 10 * math.ceil(steady['h10'].max() / 10)
-by_level = stats.binned(steady, 'h10', list(range(low, high + 1, 5 if high - low <= 60 else 10)), 'block')
+low, high = 10 * math.floor(steady['h10'].min() / 10), 10 * math.floor(steady['h10'].max() / 10) + 10
+# at most 8 bins, so that their labels fit under the panel
+step = next(step for step in (5, 10, 20, 30) if (high - low) / step <= 8)
+by_level = stats.binned(steady, 'h10', list(range(low, low + step * math.ceil((high - low) / step) + 1, step)), 'block')
 by_change = stats.binned(paired.dropna(subset=['change']), 'change', [-100, -6, -3, -1, 1, 3, 6, 100], 'block')
 names = {'< -6': '< −6', '-6–-3': '−6 to −3', '-3–-1': '−3 to −1', '-1–1': '−1 to 1', '1–3': '1 to 3', '3–6': '3 to 6', '6–100': '> 6'}
 by_change['bin'] = by_change['bin'].map(names)

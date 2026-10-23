@@ -32,7 +32,8 @@ Accuracy is the **bias** (mean of device − reference). Precision is the **spre
   The Bland-Altman plot has the reference on the x axis (Krouwer 2008).
 - **Dependence.** Readings a few seconds apart are not independent. Every confidence interval comes from a block
   bootstrap: blocks of whole minutes, twice as long as the differences stay correlated. A Fitbit reading inside two
-  sessions (phone and PC at once) is paired once; sessions the Automation desk marks as removed or as a copy are left out.
+  sessions (phone and PC at once) is paired once; a session the Automation desk marks as a copy is left out
+  (a session it hides as removed stays in: the recording is fine).
 - **Check.** The first look (23 Oct 2026, strap HR per second, as in the Automation desk) gave n 1991, bias +0.02,
   MAE 1.52 bpm. The tables of this project give exactly the same numbers with that method.
 
