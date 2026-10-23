@@ -1,0 +1,19 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.pytest_cache/
+.ruff_cache/
+
+# Virtual environments
+.venv
+
+# Personal data, secrets and outputs made from them
+data/
+secrets/
+figures/
+.ipynb_checkpoints/
+
