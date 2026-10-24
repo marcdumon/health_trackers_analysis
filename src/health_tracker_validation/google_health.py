@@ -157,10 +157,11 @@ def _number(value: object) -> float | None:
 
 
 def _leaves(value: object, path: str = '') -> Iterator[tuple[str, object]]:
-    """The value fields of a point body, by path; a list item is named by its type field (e.g. LIGHT) or its index."""
+    """The value fields of a point body, by path; a list item is named by its type field (e.g. LIGHT) or its index. Only the
+    body's own times are left out (they are the row's start, end and date); a part such as a sleep stage keeps its times."""
     if isinstance(value, dict):
         for key, item in value.items():
-            if key not in TIME_KEYS:
+            if path or key not in TIME_KEYS:
                 yield from _leaves(item, f'{path}.{key}' if path else key)
     elif isinstance(value, list):
         for n, item in enumerate(value):

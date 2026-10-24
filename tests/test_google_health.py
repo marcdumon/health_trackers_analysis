@@ -63,6 +63,16 @@ def test_interval_daily_and_rollup_points_keep_their_own_times() -> None:
     assert (total['start'], total['field'], total['value'], total['device']) == ('2026-10-23T12:35:00Z', 'kcalSum', 1.5, None)
 
 
+def test_the_parts_of_a_point_keep_their_own_times() -> None:
+    sleep = {'dataSource': {'recordingMethod': 'DERIVED', 'device': {'displayName': 'Fitbit Air'}},
+             'sleep': {'interval': {'startTime': '2026-10-23T23:01:00Z', 'endTime': '2026-10-24T08:31:00Z'},
+                       'stages': [{'startTime': '2026-10-23T23:01:00Z', 'endTime': '2026-10-23T23:05:00Z', 'type': 'AWAKE'}]}}
+    rows = google_health.rows('sleep', [sleep])
+    assert {(r['field'], r['text']) for r in rows} == {('stages[0].startTime', '2026-10-23T23:01:00Z'),
+                                                      ('stages[0].endTime', '2026-10-23T23:05:00Z'), ('stages[0].type', 'AWAKE')}
+    assert {(r['start'], r['end']) for r in rows} == {('2026-10-23T23:01:00Z', '2026-10-24T08:31:00Z')}
+
+
 def test_the_raw_files_become_one_table_without_duplicates(tmp_path: Path) -> None:
     for day in ('2026-10-23', '2026-10-24'):
         (tmp_path / 'heart-rate').mkdir(exist_ok=True)
