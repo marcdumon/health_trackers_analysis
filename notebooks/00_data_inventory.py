@@ -16,7 +16,7 @@
 # What each device has recorded since the start of the study, and when. Update the data first:
 #
 # ```bash
-# uv run htv update
+# uv run hta update
 # ```
 #
 # `collect` copies the new files and API data into `data/raw/`; `build` turns them into the tables in `data/processed/`.
@@ -26,9 +26,9 @@ import pandas as pd
 from IPython.display import display
 from matplotlib import pyplot as plt
 
-from health_tracker_validation import charts, inventory
-from health_tracker_validation.config import RAW, settings
-from health_tracker_validation.data import load
+from health_trackers_analysis import charts, inventory
+from health_trackers_analysis.config import RAW, settings
+from health_trackers_analysis.data import load
 
 charts.use_style()
 tz = settings().tz

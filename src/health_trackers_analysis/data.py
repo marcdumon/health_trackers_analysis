@@ -1,8 +1,8 @@
-"""The tables made by `htv build`, for the notebooks."""
+"""The tables made by `hta build`, for the notebooks."""
 
 import pandas as pd
 
-from health_tracker_validation.config import PROCESSED
+from health_trackers_analysis.config import PROCESSED
 
 
 def load(name: str) -> pd.DataFrame:

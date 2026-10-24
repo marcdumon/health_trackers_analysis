@@ -2,7 +2,7 @@
 
 import pandas as pd
 
-from health_tracker_validation import inventory
+from health_trackers_analysis import inventory
 
 
 def test_samples_close_together_form_one_span() -> None:

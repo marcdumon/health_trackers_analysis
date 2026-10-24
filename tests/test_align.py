@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from health_tracker_validation import align
+from health_trackers_analysis import align
 
 
 def ms_times(ms: np.ndarray) -> pd.Series:

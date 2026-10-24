@@ -13,7 +13,7 @@ import pandas as pd
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
 
-from health_tracker_validation.config import FIGURES, settings
+from health_trackers_analysis.config import FIGURES, settings
 
 DEVICE = {'Polar H10': '#2a78d6', 'Fitbit Air': '#eb6834', 'Hume Band 2.0': '#1baf7a', 'Sleep as Android': '#eda100'}
 INK, INK2, MUTED, GRID, AXIS, SURFACE = '#0b0b0b', '#52514e', '#898781', '#e1e0d9', '#c3c2b7', '#fcfcfb'

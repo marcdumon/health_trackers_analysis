@@ -12,8 +12,8 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 from google_api import auth, health
 
-from health_tracker_validation.config import RAW, SECRETS, settings
-from health_tracker_validation.copying import copy_file, copy_version
+from health_trackers_analysis.config import RAW, SECRETS, settings
+from health_trackers_analysis.copying import copy_file, copy_version
 
 PHONE_NAME = re.compile(r'^(?:Polar_H10_[0-9A-Z]+_|MARKER_)(?P<start>\d{8}_\d{6})(?:_(?:HR|RR|ECG|ACC))?\.txt$')
 PC_NAME = re.compile(r'^\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}$')

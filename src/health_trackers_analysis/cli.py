@@ -1,14 +1,14 @@
-"""The command line: `htv collect` copies the new data of all sources, `htv build` makes the tables."""
+"""The command line: `hta collect` copies the new data of all sources, `hta build` makes the tables."""
 
 import argparse
 import json
 
-from health_tracker_validation import build, collect
+from health_trackers_analysis import build, collect
 
 
 def main() -> None:
     """Run one command."""
-    parser = argparse.ArgumentParser(prog='htv', description='Collect and prepare the data of the health tracker validation.')
+    parser = argparse.ArgumentParser(prog='hta', description='Collect and prepare the data of the health trackers analysis.')
     commands = parser.add_subparsers(dest='command', required=True)
     commands.add_parser('collect', help='copy the new data of all sources into data/raw/')
     commands.add_parser('build', help='make the tables in data/processed/ from data/raw/')

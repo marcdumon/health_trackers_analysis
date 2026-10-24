@@ -36,9 +36,9 @@ import pandas as pd
 from IPython.display import Markdown, display
 from matplotlib import pyplot as plt
 
-from health_tracker_validation import align, charts, stats
-from health_tracker_validation.config import settings
-from health_tracker_validation.data import load
+from health_trackers_analysis import align, charts, stats
+from health_trackers_analysis.config import settings
+from health_trackers_analysis.data import load
 
 charts.use_style()
 tz = settings().tz

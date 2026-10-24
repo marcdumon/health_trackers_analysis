@@ -10,7 +10,7 @@ from zoneinfo import ZoneInfo
 
 import pandas as pd
 
-from health_tracker_validation import collect
+from health_trackers_analysis import collect
 
 TZ = ZoneInfo('Europe/Brussels')
 START = datetime(2026, 10, 23, 13, 26, tzinfo=TZ)

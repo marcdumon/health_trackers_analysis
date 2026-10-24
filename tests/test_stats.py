@@ -5,7 +5,7 @@ import pandas as pd
 import pytest
 import statsmodels.formula.api as smf
 
-from health_tracker_validation import stats
+from health_trackers_analysis import stats
 
 
 def test_a_constant_offset_is_all_bias_and_no_spread() -> None:

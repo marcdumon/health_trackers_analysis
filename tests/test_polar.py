@@ -8,7 +8,7 @@ from zoneinfo import ZoneInfo
 import numpy as np
 import pandas as pd
 
-from health_tracker_validation import polar
+from health_trackers_analysis import polar
 
 TZ = ZoneInfo('Europe/Brussels')
 

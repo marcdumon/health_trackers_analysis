@@ -1,5 +1,5 @@
 [project]
-name = 'health-tracker-validation'
+name = 'health-trackers-analysis'
 version = '0.1.0'
 description = 'How accurate and precise are consumer health trackers? Fitbit Air and Hume Band 2.0 against the Polar H10 chest strap.'
 readme = 'README.md'
@@ -18,7 +18,7 @@ dependencies = [
 ]
 
 [project.scripts]
-htv = 'health_tracker_validation.cli:main'
+hta = 'health_trackers_analysis.cli:main'
 
 [build-system]
 requires = ['setuptools>=68']

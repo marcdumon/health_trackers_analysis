@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from health_tracker_validation import build
+from health_trackers_analysis import build
 
 HR_POINT = {'dataSource': {'recordingMethod': 'PASSIVELY_MEASURED', 'device': {'displayName': 'Fitbit Air'}, 'platform': 'FITBIT'},
             'heartRate': {'sampleTime': {'physicalTime': '2026-10-23T13:32:55Z', 'utcOffset': '7200s'}, 'beatsPerMinute': '71'}}

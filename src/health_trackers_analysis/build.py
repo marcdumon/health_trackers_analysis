@@ -12,8 +12,8 @@ from zoneinfo import ZoneInfo
 import pandas as pd
 from google_api import health
 
-from health_tracker_validation import polar
-from health_tracker_validation.config import PROCESSED, RAW, settings
+from health_trackers_analysis import polar
+from health_trackers_analysis.config import PROCESSED, RAW, settings
 
 
 def _utc(ms: pd.Series) -> pd.Series:

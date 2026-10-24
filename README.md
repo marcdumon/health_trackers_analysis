@@ -1,4 +1,4 @@
-# health_tracker_validation
+# health_trackers_analysis
 
 How accurate and how precise are consumer health trackers? A single-person study of the **Fitbit Air** and the
 **Hume Band 2.0**, with the **Polar H10** chest strap (ECG-based) as the reference for heart rate.
@@ -57,7 +57,7 @@ version of an export is kept.
 
 ```bash
 uv sync
-uv run htv update      # collect (copy the new data), then build the tables in data/processed/
+uv run hta update      # collect (copy the new data), then build the tables in data/processed/
 uv run pytest
 ```
 
@@ -81,7 +81,7 @@ Then open the notebooks in `notebooks/` (kernel: `.venv/bin/python`). The notebo
 
 ```
 config.toml                      study start, time zone, source paths
-src/health_tracker_validation/
+src/health_trackers_analysis/
   collect.py                     copy the sources into data/raw/
   polar.py                       Polar H10 files: sessions, beats, strap HR (clock change safe)
   build.py                       data/raw/ -> data/processed/*.parquet
@@ -104,5 +104,5 @@ tests/                           pytest, no network
 1. **Hume Band 2.0.** The Health Connect export in Dropbox is from January. Does the Hume app write to Health Connect,
    and can the export run again (daily)?
 2. **Steps.** Count steps by hand on a few walks, as the reference for steps.
-3. **Automatic update.** Run `htv update` every day by a timer, or only by hand?
+3. **Automatic update.** Run `hta update` every day by a timer, or only by hand?
 4. **Publication.** Will this repository and its data be public with the blog post?
