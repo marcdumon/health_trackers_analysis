@@ -10,8 +10,9 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import pandas as pd
+from google_api import health
 
-from health_tracker_validation import google_health, polar
+from health_tracker_validation import polar
 from health_tracker_validation.config import PROCESSED, RAW, settings
 
 
@@ -46,6 +47,14 @@ def polar_tables(folder: Path, tz: ZoneInfo, activities: Path) -> tuple[pd.DataF
     return sessions_frame, beats_frame, strap_frame
 
 
+def google_health_table(folder: Path) -> pd.DataFrame:
+    """Every saved Google Health value as one long table, with its times in UTC."""
+    frame = pd.DataFrame(health.rows(folder), columns=list(health.COLUMNS))
+    for column in ('start', 'end'):
+        frame[column] = pd.to_datetime(frame[column], utc=True, format='ISO8601').dt.as_unit('ms')
+    return frame
+
+
 def fitbit_hr(points: pd.DataFrame) -> pd.DataFrame:
     """The heart rate samples of the Fitbit Air, in time order."""
     hr = points[(points['type'] == 'heart-rate') & (points['field'] == 'beatsPerMinute') & (points['device'] == 'Fitbit Air')]
@@ -58,7 +67,7 @@ def run(raw: Path = RAW, target: Path = PROCESSED) -> dict[str, int]:
     tz = settings().tz
     target.mkdir(parents=True, exist_ok=True)
     sessions, beats, strap = polar_tables(raw / 'polar_h10', tz, raw / 'automation_desk' / 'polar_sessions.csv')
-    points = google_health.table(raw / 'google_health')
+    points = google_health_table(raw / 'google_health')
     tables = {'h10_sessions': sessions, 'h10_beats': beats, 'h10_strap_hr': strap, 'google_health': points,
               'fitbit_hr': fitbit_hr(points)}
     for name, frame in tables.items():

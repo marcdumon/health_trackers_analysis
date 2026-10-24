@@ -74,6 +74,7 @@ Then open the notebooks in `notebooks/` (kernel: `.venv/bin/python`). The notebo
 - `secrets/client_secret.json` (Google OAuth client, Desktop) and `secrets/google_health_token.json` (Google Health
   login with the scopes `googlehealth.activity_and_fitness.readonly`, `googlehealth.health_metrics_and_measurements.readonly`
   and `googlehealth.sleep.readonly`). The folder is not in git.
+- The Google Health code is in the library `google_api` (`../../google_api`), linked as an editable path dependency.
 - The paths of the sources are in `config.toml`.
 
 ## Layout
@@ -82,7 +83,6 @@ Then open the notebooks in `notebooks/` (kernel: `.venv/bin/python`). The notebo
 config.toml                      study start, time zone, source paths
 src/health_tracker_validation/
   collect.py                     copy the sources into data/raw/
-  google_health.py               Fitbit Air through the Google Health API
   polar.py                       Polar H10 files: sessions, beats, strap HR (clock change safe)
   build.py                       data/raw/ -> data/processed/*.parquet
   align.py                       H10 reference HR, pairs, delay and window curves
@@ -94,17 +94,15 @@ tests/                           pytest, no network
 
 ## Data still to come
 
-- **Exercise.** The H10 is worn at every Fitness and Gym cardio session. The Fitbit Air is worn from 23 Oct 2026, so
+- **Exercise.** The H10 is worn at every Weights and Gym cardio session. The Fitbit Air is worn from 23 Oct 2026, so
   each new session adds exercise pairs. The activity comes from the Automation desk.
 - **Hume Band 2.0.** Not arrived yet (23 Oct 2026).
 - **Night.** H10 nights start when the Hume Band 2.0 arrives, to check the night HR and the HRV of both bands.
 
 ## Open questions
 
-1. **Google login.** If the Google app is still in "Testing", the Health login stops working after 7 days
-   (around 30 Oct 2026). In the Google Auth platform, Audience: click "Publish app".
-2. **Hume Band 2.0.** The Health Connect export in Dropbox is from January. Does the Hume app write to Health Connect,
+1. **Hume Band 2.0.** The Health Connect export in Dropbox is from January. Does the Hume app write to Health Connect,
    and can the export run again (daily)?
-3. **Steps.** Count steps by hand on a few walks, as the reference for steps.
-4. **Automatic update.** Run `htv update` every day by a timer, or only by hand?
-5. **Publication.** Will this repository and its data be public with the blog post?
+2. **Steps.** Count steps by hand on a few walks, as the reference for steps.
+3. **Automatic update.** Run `htv update` every day by a timer, or only by hand?
+4. **Publication.** Will this repository and its data be public with the blog post?

@@ -548,6 +548,27 @@ wheels = [
 ]
 
 [[package]]
+name = "google-api"
+version = "0.1.0"
+source = { editable = "../../google_api" }
+dependencies = [
+    { name = "google-auth" },
+    { name = "requests" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "google-auth", specifier = ">=2.62.0" },
+    { name = "requests", specifier = ">=2.34.2" },
+]
+
+[package.metadata.requires-dev]
+dev = [
+    { name = "pytest", specifier = ">=9.1.1" },
+    { name = "ruff", specifier = ">=0.17.2" },
+]
+
+[[package]]
 name = "google-auth"
 version = "2.62.0"
 source = { registry = "https://pypi.org/simple" }
@@ -565,14 +586,13 @@ name = "health-tracker-validation"
 version = "0.1.0"
 source = { editable = "." }
 dependencies = [
-    { name = "google-auth" },
+    { name = "google-api" },
     { name = "ipykernel" },
     { name = "matplotlib" },
     { name = "numpy" },
     { name = "pandas" },
     { name = "pingouin" },
     { name = "pyarrow" },
-    { name = "requests" },
     { name = "scipy" },
     { name = "statsmodels" },
 ]
@@ -587,14 +607,13 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "google-auth", specifier = ">=2.62.0" },
+    { name = "google-api", editable = "../../google_api" },
     { name = "ipykernel", specifier = ">=7.4.0" },
     { name = "matplotlib", specifier = ">=3.11.2" },
     { name = "numpy", specifier = ">=2.5.4" },
     { name = "pandas", specifier = ">=3.1.0" },
     { name = "pingouin", specifier = ">=0.7.0" },
     { name = "pyarrow", specifier = ">=26.0.0" },
-    { name = "requests", specifier = ">=2.34.2" },
     { name = "scipy", specifier = ">=1.18.1" },
     { name = "statsmodels", specifier = ">=0.15.0" },
 ]

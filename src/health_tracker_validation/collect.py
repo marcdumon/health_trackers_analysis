@@ -1,6 +1,6 @@
 """The collector: copies everything of the study period into data/raw/. It only reads the sources: the Polar H10 folders,
 the Automation desk database (opened read-only), the Health Connect export and the Sleep as Android backup. The Fitbit
-data comes from the Google Health API (google_health)."""
+data comes from the Google Health API (the google_api library)."""
 
 import json
 import re
@@ -10,13 +10,14 @@ from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import pandas as pd
+from google_api import auth, health
 
-from health_tracker_validation import google_health
-from health_tracker_validation.config import RAW, settings
+from health_tracker_validation.config import RAW, SECRETS, settings
 from health_tracker_validation.copying import copy_file, copy_version
 
 PHONE_NAME = re.compile(r'^(?:Polar_H10_[0-9A-Z]+_|MARKER_)(?P<start>\d{8}_\d{6})(?:_(?:HR|RR|ECG|ACC))?\.txt$')
 PC_NAME = re.compile(r'^\d{4}-\d{2}-\d{2}_\d{2}-\d{2}-\d{2}$')
+GOOGLE_HEALTH_TOKEN = SECRETS / 'google_health_token.json'
 
 
 def polar_files(phone_dir: Path, pc_dir: Path, start: datetime, tz: ZoneInfo, target: Path = RAW / 'polar_h10') -> int:
@@ -71,5 +72,6 @@ def run() -> dict[str, object]:
         'automation_desk_sessions': automation_desk_sessions(s.automation_desk_db, s.start),
         'health_connect_export': export(s.health_connect_zip, s.start, RAW / 'health_connect', 'HealthConnect'),
         'sleep_as_android_backup': export(s.sleep_as_android_zip, s.start, RAW / 'sleep_as_android', 'SleepAsAndroid'),
-        'google_health': google_health.collect(s.start.astimezone(s.tz).date(), now.date(), s.tz),
+        'google_health': health.collect(auth.creds(GOOGLE_HEALTH_TOKEN), RAW / 'google_health', s.start.astimezone(s.tz).date(),
+                                        now.date(), s.tz),
     }
