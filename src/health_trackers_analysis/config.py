@@ -30,6 +30,9 @@ class Settings:
 @cache
 def settings() -> Settings:
     """The settings of config.toml."""
-    raw = tomllib.loads((ROOT / 'config.toml').read_text())
+    path = ROOT / 'config.toml'
+    if not path.is_file():
+        raise SystemExit(f'No config.toml in {ROOT}: copy config.example.toml to config.toml, then set your own paths in it.')
+    raw = tomllib.loads(path.read_text())
     sources = {key: Path(value) for key, value in raw['sources'].items()}
     return Settings(start=datetime.fromisoformat(raw['study']['start']), tz=ZoneInfo(raw['study']['timezone']), **sources)

@@ -1,4 +1,5 @@
-# The places the collector copies from. It only reads them; all copies go to data/raw/ in this project.
+# Copy this file to config.toml (not in git) and set your own paths. The places the collector copies from: it only reads
+# them; all copies go to data/raw/ in this project.
 
 [study]
 # the first time the Fitbit Air was worn: older data has nothing to compare with
@@ -10,7 +11,7 @@ timezone = 'Europe/Brussels'
 polar_phone_dir = '/path/to/polar_h10_logger/phone_sessions'
 polar_pc_dir = '/path/to/polar_h10_logger/pc_sessions'
 # the activity the user gave each H10 session in the health dashboard (read only)
-health_dashboard_db = '/mnt/Dev/active_python_projects/health_dashboard/data/health.db'
+health_dashboard_db = '/path/to/health_dashboard/data/health.db'
 # the phone's Health Connect export (Hume Band 2.0), synced by Dropbox
 health_connect_zip = '/path/to/Dropbox/Hc/HealthConnect.zip'
 # the Sleep as Android backup, synced by Dropbox

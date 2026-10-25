@@ -57,6 +57,7 @@ google-api = { path = "../../google_api", editable = true }
 dev = [
     "jupytext>=1.19.6",
     "nbconvert>=7.17.2",
+    "nbstripout>=0.9.1",
     "pytest>=9.1.1",
     "ruff>=0.17.2",
 ]

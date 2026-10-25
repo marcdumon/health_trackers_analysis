@@ -56,6 +56,7 @@ version of an export is kept.
 ## Run it
 
 ```bash
+cp config.example.toml config.toml   # then set your own paths (not in git)
 uv sync
 uv run hta update      # collect (copy the new data), then build the tables in data/processed/
 uv run pytest
@@ -75,12 +76,12 @@ Then open the notebooks in `notebooks/` (kernel: `.venv/bin/python`). The notebo
   login with the scopes `googlehealth.activity_and_fitness.readonly`, `googlehealth.health_metrics_and_measurements.readonly`
   and `googlehealth.sleep.readonly`). The folder is not in git.
 - The Google Health code is in the library `google_api` (`../../google_api`), linked as an editable path dependency.
-- The paths of the sources are in `config.toml`.
+- The paths of the sources are in `config.toml` (not in git; `config.example.toml` shows it).
 
 ## Layout
 
 ```
-config.toml                      study start, time zone, source paths
+config.example.toml              study start, time zone, source paths (copy it to config.toml)
 src/health_trackers_analysis/
   collect.py                     copy the sources into data/raw/
   polar.py                       Polar H10 files: sessions, beats, strap HR (clock change safe)
