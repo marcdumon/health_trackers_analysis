@@ -1,5 +1,5 @@
 """The collector: copies everything of the study period into data/raw/. It only reads the sources: the Polar H10 folders,
-the Automation desk database (opened read-only), the Health Connect export and the Sleep as Android backup. The Fitbit
+the health dashboard database (opened read-only), the Health Connect export and the Sleep as Android backup. The Fitbit
 data comes from the Google Health API (the google_api library)."""
 
 import json
@@ -39,8 +39,8 @@ def polar_files(phone_dir: Path, pc_dir: Path, start: datetime, tz: ZoneInfo, ta
     return copied
 
 
-def automation_desk_sessions(db: Path, start: datetime, target: Path = RAW / 'automation_desk' / 'polar_sessions.csv') -> int:
-    """Save the H10 sessions of the study period as the Automation desk knows them, with the activity the user gave each;
+def dashboard_sessions(db: Path, start: datetime, target: Path = RAW / 'health_dashboard' / 'polar_sessions.csv') -> int:
+    """Save the H10 sessions of the study period as the health dashboard knows them, with the activity the user gave each;
     returns the number of sessions. `name` is the phone HR file or the PC folder, as in polar.Found."""
     con = sqlite3.connect(f'file:{db}?mode=ro', uri=True)
     try:
@@ -69,7 +69,7 @@ def run() -> dict[str, object]:
     now = datetime.now(s.tz)
     return {
         'polar_h10_files': polar_files(s.polar_phone_dir, s.polar_pc_dir, s.start, s.tz),
-        'automation_desk_sessions': automation_desk_sessions(s.automation_desk_db, s.start),
+        'health_dashboard_sessions': dashboard_sessions(s.health_dashboard_db, s.start),
         'health_connect_export': export(s.health_connect_zip, s.start, RAW / 'health_connect', 'HealthConnect'),
         'sleep_as_android_backup': export(s.sleep_as_android_zip, s.start, RAW / 'sleep_as_android', 'SleepAsAndroid'),
         'google_health': health.collect(auth.creds(GOOGLE_HEALTH_TOKEN), RAW / 'google_health', s.start.astimezone(s.tz).date(),

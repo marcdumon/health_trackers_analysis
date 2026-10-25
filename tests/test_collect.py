@@ -1,5 +1,5 @@
 """The collector: it copies only the study period, only finished PC sessions, never twice, and reads the activities of the
-Automation desk without changing that database."""
+health dashboard without changing that database."""
 
 import json
 import os
@@ -57,8 +57,8 @@ def test_only_finished_pc_sessions_of_the_study_period_are_copied(tmp_path: Path
     assert sorted(p.name for p in (target / 'pc').iterdir()) == ['2026-10-23_16-00-00']
 
 
-def test_the_activities_are_read_from_the_automation_desk(tmp_path: Path) -> None:
-    db = tmp_path / 'automation.db'
+def test_the_activities_are_read_from_the_health_dashboard(tmp_path: Path) -> None:
+    db = tmp_path / 'health.db'
     with sqlite3.connect(db) as con:
         con.execute('CREATE TABLE polar_activities (id INTEGER PRIMARY KEY, name TEXT, position INTEGER, test TEXT)')
         con.execute('CREATE TABLE polar_sessions (id INTEGER PRIMARY KEY, source TEXT, serial TEXT, path TEXT, start_at TEXT, '
@@ -70,7 +70,7 @@ def test_the_activities_are_read_from_the_automation_desk(tmp_path: Path) -> Non
                     "'2026-10-22T10:40:34+00:00', 0, NULL, NULL, NULL)")
     before = os.stat(db).st_mtime_ns
     target = tmp_path / 'raw' / 'sessions.csv'
-    assert collect.automation_desk_sessions(db, START, target) == 1
+    assert collect.dashboard_sessions(db, START, target) == 1
     rows = pd.read_csv(target)
     assert list(rows['name']) == ['Polar_H10_E813952E_20261023_144412_HR.txt']
     assert list(rows['activity']) == ['Rest']

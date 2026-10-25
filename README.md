@@ -32,9 +32,9 @@ Accuracy is the **bias** (mean of device − reference). Precision is the **spre
   The Bland-Altman plot has the reference on the x axis (Krouwer 2008).
 - **Dependence.** Readings a few seconds apart are not independent. Every confidence interval comes from a block
   bootstrap: blocks of whole minutes, twice as long as the differences stay correlated. A Fitbit reading inside two
-  sessions (phone and PC at once) is paired once; a session the Automation desk marks as a copy is left out
+  sessions (phone and PC at once) is paired once; a session the health dashboard marks as a copy is left out
   (a session it hides as removed stays in: the recording is fine).
-- **Check.** The first look (23 Oct 2026, strap HR per second, as in the Automation desk) gave n 1991, bias +0.02,
+- **Check.** The first look (23 Oct 2026, strap HR per second, as in the health dashboard) gave n 1991, bias +0.02,
   MAE 1.52 bpm. The tables of this project give exactly the same numbers with that method.
 
 ## Data
@@ -44,7 +44,7 @@ Everything is copied into `data/` (not in git). The sources are only read:
 | Source | Where it comes from | Copy |
 |---|---|---|
 | Polar H10 | phone app files and PC logger sessions in `/path/to/polar_h10_logger/` | `data/raw/polar_h10/` |
-| H10 activities | the activity given to each session in the Automation desk (database opened read-only) | `data/raw/automation_desk/` |
+| H10 activities | the activity given to each session in the health dashboard (database opened read-only) | `data/raw/health_dashboard/` |
 | Fitbit Air | Google Health API, every data type, one file per type and day | `data/raw/google_health/` |
 | Hume Band 2.0 | the phone's Health Connect export in Dropbox | `data/raw/health_connect/` |
 | Sleep as Android | the backup in Dropbox | `data/raw/sleep_as_android/` |
@@ -95,7 +95,7 @@ tests/                           pytest, no network
 ## Data still to come
 
 - **Exercise.** The H10 is worn at every Weights and Gym cardio session. The Fitbit Air is worn from 23 Oct 2026, so
-  each new session adds exercise pairs. The activity comes from the Automation desk.
+  each new session adds exercise pairs. The activity comes from the health dashboard.
 - **Hume Band 2.0.** Not arrived yet (23 Oct 2026).
 - **Night.** H10 nights start when the Hume Band 2.0 arrives, to check the night HR and the HRV of both bands.
 

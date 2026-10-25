@@ -22,7 +22,7 @@ class Settings:
     tz: ZoneInfo
     polar_phone_dir: Path
     polar_pc_dir: Path
-    automation_desk_db: Path
+    health_dashboard_db: Path
     health_connect_zip: Path
     sleep_as_android_zip: Path
 

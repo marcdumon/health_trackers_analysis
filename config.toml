@@ -9,8 +9,8 @@ timezone = 'Europe/Brussels'
 # Polar H10: the files of the phone app (Polar Sensor Logger) and the sessions of the PC logger (polar_h10_logger)
 polar_phone_dir = '/path/to/polar_h10_logger/phone_sessions'
 polar_pc_dir = '/path/to/polar_h10_logger/pc_sessions'
-# the activity the user gave each H10 session in the Automation desk (read only)
-automation_desk_db = '/mnt/Dev/active_python_projects/automation_desk/data/automation.db'
+# the activity the user gave each H10 session in the health dashboard (read only)
+health_dashboard_db = '/mnt/Dev/active_python_projects/health_dashboard/data/health.db'
 # the phone's Health Connect export (Hume Band 2.0), synced by Dropbox
 health_connect_zip = '/path/to/Dropbox/Hc/HealthConnect.zip'
 # the Sleep as Android backup, synced by Dropbox

@@ -31,7 +31,7 @@ DELAY_WINDOW = 20
 @dataclass
 class Found:
     """A session in the copied files: its key, source ('phone' or 'pc'), strap serial, the file of each stream, and the
-    name the Automation desk knows it by (the phone HR file or the PC folder)."""
+    name the health dashboard knows it by (the phone HR file or the PC folder)."""
 
     key: str
     source: str

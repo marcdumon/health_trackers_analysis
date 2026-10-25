@@ -1,6 +1,6 @@
 """Turns the raw copies in data/raw/ into tables in data/processed/ (parquet, times in UTC):
 
-- h10_sessions: one row per H10 session, with the activity the user gave it in the Automation desk
+- h10_sessions: one row per H10 session, with the activity the user gave it in the health dashboard
 - h10_beats: every RR interval with the time of its beat and whether it is a clean beat
 - h10_strap_hr: the HR the strap itself reports, about once a second
 - google_health: every Fitbit value of every type, one row per value
@@ -66,7 +66,7 @@ def run(raw: Path = RAW, target: Path = PROCESSED) -> dict[str, int]:
     """Build every table; returns the rows of each."""
     tz = settings().tz
     target.mkdir(parents=True, exist_ok=True)
-    sessions, beats, strap = polar_tables(raw / 'polar_h10', tz, raw / 'automation_desk' / 'polar_sessions.csv')
+    sessions, beats, strap = polar_tables(raw / 'polar_h10', tz, raw / 'health_dashboard' / 'polar_sessions.csv')
     points = google_health_table(raw / 'google_health')
     tables = {'h10_sessions': sessions, 'h10_beats': beats, 'h10_strap_hr': strap, 'google_health': points,
               'fitbit_hr': fitbit_hr(points)}

@@ -52,7 +52,7 @@ STEADY_BPM = 2
 
 sessions, beats, fitbit = load('h10_sessions'), load('h10_beats'), load('fitbit_hr')
 sessions = sessions[(sessions['end'] - sessions['start']) >= pd.Timedelta(minutes=2)].copy()
-# a session hidden in the Automation desk (removed) is still a good recording; only a copy would pair the same beats twice
+# a session hidden in the health dashboard (removed) is still a good recording; only a copy would pair the same beats twice
 sessions = sessions[sessions['copy_of'].isna()].copy()
 sessions['activity'] = sessions['activity'].fillna('not set')
 paired = align.pairs(fitbit, beats, sessions, WINDOW_S, LAG_S)
